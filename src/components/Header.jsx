@@ -5,7 +5,7 @@ function Header() {
         <>
             <Link to="/">DB  </Link>
             <Link to="/topics">Topics  </Link>
-            <Link to="/profile">Profile  </Link>
+            <Link to="/profile/javad">Profile  </Link>
             <Outlet/>
         </>
     )
