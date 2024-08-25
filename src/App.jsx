@@ -1,5 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
+import "fastbootstrap/dist/css/fastbootstrap.min.css"
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Topics from "./components/Topics";
@@ -7,6 +6,7 @@ import Profile from "./components/Profile";
 import Jumbotron from "./components/Jumbotron";
 import TopicDetails from "./components/discussions/TopicDetails.jsx";
 import TopicForm from "./components/discussions/TopicForm.jsx";
+import SearchResults from "./components/SearchResults.jsx";
 import Login from "./components/accounts/Login.jsx";
 import Signup from "./components/accounts/Signup.jsx";
 
@@ -20,11 +20,12 @@ function App() {
 
                     <Route path="login" element={<Login/>}/>
                     <Route path="signup" element={<Signup/>}/>
+                    <Route path="profiles/:username" element={<Profile/>}/>
 
                     <Route path="topics" element={<Topics/>}/>
-                    <Route path="topics/create" element={<TopicForm/>}/>
+                    <Route path="topics/draft" element={<TopicForm/>}/>
                     <Route path="topics/:topic_id" element={<TopicDetails/>}/>
-                    <Route path="profiles/:username" element={<Profile/>}/>
+                    <Route path="topics/:query" element={<SearchResults/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
