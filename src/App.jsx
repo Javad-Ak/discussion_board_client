@@ -1,4 +1,4 @@
-import "fastbootstrap/dist/css/fastbootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css"
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Topics from "./components/Topics";
