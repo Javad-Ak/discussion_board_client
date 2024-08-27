@@ -20,9 +20,14 @@ function Header() {
     const navigate = useNavigate();
     const [query, setQuery] = useState("");
 
+    makeResponsive()
+    window.onresize = () => {
+        makeResponsive();
+    }
+
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary p-2">
+            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary p-1">
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <Avatar src={logo} round={true} size={avatarSize}/> Discussion Board
                 </Navbar.Brand>
@@ -31,40 +36,54 @@ function Header() {
                     <Nav className="me-auto gap-2">
                         <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
                         <Nav.Link as={Link} to="/topics/draft">Draft</Nav.Link>
-                        <Nav.Item as={InputGroup} className="border rounded-5">
-                            <Form.Control placeholder="Search" aria-describedby="addOn" size="sm" value={query}
-                                          className="border-0 rounded-5 bg-transparent"
-                                          onChange={(e) => setQuery(e.target.value)}/>
-                            <Button variant="outline-secondary" id="addOn"
-                                    className="border-0 rounded-5"
-                                    onClick={() => {
-                                        query && navigate(`/search/${query}`);
-                                        setQuery("");
-                                    }}>
-                                <BiSearch size="1.2em"/>
+                        <Nav.Item id="orderItem" className="d-flex gap-1">
+                            < InputGroup className="border rounded-5">
+                                <Form.Control placeholder="Search" aria-describedby="addOn" size="sm" value={query}
+                                              className="border-0 rounded-5 bg-transparent"
+                                              onChange={(e) => setQuery(e.target.value)}/>
+                                <Button variant="outline-secondary" id="addOn" className="border-0 rounded-5"
+                                        onClick={() => {
+                                            query && navigate(`/search/${query}`);
+                                            setQuery("");
+                                        }}>
+                                    <BiSearch size="1.2em"/>
+                                </Button>
+                            </InputGroup>
+                            <Button onClick={switchTheme} variant="outline-secondary" className="border-0 rounded-5">
+                                <PiCircleHalfFill size="1.2em"/>
                             </Button>
                         </Nav.Item>
-                        <Nav.Link onClick={switchTheme}>
-                            <PiCircleHalfFill size="1.2em"/>
-                        </Nav.Link>
                     </Nav>
-                    {Cookies.get("isAuthenticated") ?
-                        <Nav>
-                            <Nav.Link as={Link} to="/profiles/javad">
-                                <Avatar round={true} size={avatarSize - 5} name="Javad"/>
-                            </Nav.Link>
-                        </Nav>
-                        :
-                        <Nav className="gap-2">
-                            <Nav.Link as={Link} to="/signup">Sign up</Nav.Link>
-                            <Nav.Link as={Link} to="/login" className="link-primary">Log in</Nav.Link>
-                        </Nav>
-                    }
+                    <Nav id="secondNav">
+                        {Cookies.get("isAuthenticated") ?
+                            <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
+                                Javad <Avatar round={10} size={avatarSize - 5} name="Javad"/>
+                            </Nav.Item>
+                            :
+                            <Nav.Item className="d-inline-flex align-items-center gap-2">
+                                <Button variant="outline-primary"
+                                        onClick={() => navigate('/login')}>Log in</Button>
+                                <Button variant="outline-primary"
+                                        onClick={() => navigate('/signup')}>Sign up</Button>
+                            </Nav.Item>
+                        }
+                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
             <Outlet/>
         </>
     );
 }
+
+function makeResponsive() {
+    if (window.innerWidth < 992) {
+        document.getElementById("orderItem").className = "d-flex gap-2 order-first";
+        document.getElementById("secondNav").className = "d-flex border-top p-2";
+    } else {
+        document.getElementById("orderItem").className = "d-flex gap-2 order-last"
+        document.getElementById("secondNav").className = "";
+    }
+}
+
 
 export default Header;
