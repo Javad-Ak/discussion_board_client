@@ -25,7 +25,7 @@ function App() {
                     <Route path="topics" element={<Topics/>}/>
                     <Route path="topics/draft" element={<TopicForm/>}/>
                     <Route path="topics/:topic_id" element={<TopicDetails/>}/>
-                    <Route path="topics/:query" element={<SearchResults/>}/>
+                    <Route path="search/:query" element={<SearchResults/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
