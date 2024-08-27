@@ -14,16 +14,14 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 function Header() {
-    document.addEventListener('DOMContentLoaded', onPageLoaded);
+    document.addEventListener('DOMContentLoaded', onLoad);
+    window.onresize = () => {
+        makeResponsive();
+    }
 
     const avatarSize = window.screen.width < 992 ? 36 : 42;
     const navigate = useNavigate();
     const [query, setQuery] = useState("");
-
-    makeResponsive()
-    window.onresize = () => {
-        makeResponsive();
-    }
 
     return (
         <>
@@ -33,7 +31,7 @@ function Header() {
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto gap-2">
+                    <Nav className="me-auto ms-2 gap-2">
                         <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
                         <Nav.Link as={Link} to="/topics/draft">Draft</Nav.Link>
                         <Nav.Item id="orderItem" className="d-flex gap-1">
@@ -49,18 +47,19 @@ function Header() {
                                     <BiSearch size="1.2em"/>
                                 </Button>
                             </InputGroup>
-                            <Button onClick={switchTheme} variant="outline-secondary" className="border-0 rounded-5">
-                                <PiCircleHalfFill size="1.2em"/>
-                            </Button>
                         </Nav.Item>
                     </Nav>
                     <Nav id="secondNav">
                         {Cookies.get("isAuthenticated") ?
                             <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
-                                Javad <Avatar round={10} size={avatarSize - 5} name="Javad"/>
+                                <Avatar round={10} size={avatarSize - 5} name="Javad"/>
                             </Nav.Item>
                             :
                             <Nav.Item className="d-inline-flex align-items-center gap-2">
+                                <Button onClick={switchTheme} variant="" id="themeToggle"
+                                        className="border-0 rounded-5 bg-transparent">
+                                    <PiCircleHalfFill size="1.2em"/>
+                                </Button>
                                 <Button variant="outline-primary"
                                         onClick={() => navigate('/login')}>Log in</Button>
                                 <Button variant="outline-primary"
@@ -77,12 +76,19 @@ function Header() {
 
 function makeResponsive() {
     if (window.innerWidth < 992) {
-        document.getElementById("orderItem").className = "d-flex gap-2 order-first";
-        document.getElementById("secondNav").className = "d-flex border-top p-2";
+        document.getElementById("orderItem").className = "d-flex gap-2 order-first mt-2";
+        document.getElementById("secondNav").className = "d-flex border-top mt-2 p-2";
+        document.getElementById("themeToggle").className = "border-0 rounded-5 order-last bg-transparent";
     } else {
         document.getElementById("orderItem").className = "d-flex gap-2 order-last"
         document.getElementById("secondNav").className = "";
+        document.getElementById("themeToggle").className = "border-0 rounded-5 order-first bg-transparent";
     }
+}
+
+function onLoad() {
+    onPageLoaded();
+    makeResponsive();
 }
 
 
