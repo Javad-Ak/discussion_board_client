@@ -1,6 +1,8 @@
 // On page load, check localStorage for theme preference
 function onPageLoaded() {
-    const storedTheme = localStorage.getItem('theme') || 'light';
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    const storedTheme = localStorage.getItem('theme') || systemTheme;
+
     document.documentElement.setAttribute('data-bs-theme', storedTheme)
     localStorage.setItem('theme', storedTheme);
 }
