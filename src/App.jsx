@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import Header from "./components/Header";
 import Topics from "./components/Topics";
 import Profile from "./components/Profile";
@@ -9,26 +9,52 @@ import TopicForm from "./components/discussions/TopicForm.jsx";
 import SearchResults from "./components/SearchResults.jsx";
 import Login from "./components/accounts/Login.jsx";
 import Signup from "./components/accounts/Signup.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
+// errors are handled via the provider
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Header/>,
+        index: <Jumbotron/>,
+        errorElement: <ErrorPage/>,
+        children: [
+            {
+                path: "login",
+                element: <Login/>,
+            },
+            {
+                path: "signup",
+                element: <Signup/>,
+            },
+            {
+                path: "profiles/:username",
+                element: <Profile/>,
+            },
+            {
+                path: "topics",
+                element: <Topics/>,
+                children: [
+                    {
+                        path: ":topic_id",
+                        element: <TopicDetails/>
+                    }, {
+                        path: "draft",
+                        element: <TopicForm/>
+                    }
+                ]
+            },
+            {
+                path: "search",
+                element: <SearchResults/>,
+            },
+        ],
+    },
+]);
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Header/>}>
-                    <Route index element={<Jumbotron/>}/>
-
-                    <Route path="login" element={<Login/>}/>
-                    <Route path="signup" element={<Signup/>}/>
-                    <Route path="profiles/:username" element={<Profile/>}/>
-
-                    <Route path="topics" element={<Topics/>}/>
-                    <Route path="topics/draft" element={<TopicForm/>}/>
-                    <Route path="topics/:topic_id" element={<TopicDetails/>}/>
-                    <Route path="search/:query" element={<SearchResults/>}/>
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router}/>
     )
 }
 
