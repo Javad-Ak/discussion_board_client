@@ -7,31 +7,33 @@ import Jumbotron from "./components/Jumbotron";
 import TopicDetails from "./components/discussions/TopicDetails.jsx";
 import TopicForm from "./components/discussions/TopicForm.jsx";
 import SearchResults from "./components/SearchResults.jsx";
-import Login from "./components/accounts/Login.jsx";
-import Signup from "./components/accounts/Signup.jsx";
+import LoginForm from "./components/accounts/LoginForm.jsx";
+import SignupForm from "./components/accounts/SignupForm.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
+import {login, signup} from "./actions/accounts.js";
 
 // errors are handled via the provider
 const router = createBrowserRouter([
     {
+        path: "/login",
+        element: <LoginForm/>,
+        errorElement: <ErrorPage/>,
+        action: login,
+    }, {
+        path: "/signup",
+        element: <SignupForm/>,
+        errorElement: <ErrorPage/>,
+        action: signup,
+    }, {
         path: "/",
         element: <Header/>,
         index: <Jumbotron/>,
         errorElement: <ErrorPage/>,
         children: [
             {
-                path: "login",
-                element: <Login/>,
-            },
-            {
-                path: "signup",
-                element: <Signup/>,
-            },
-            {
                 path: "profiles/:username",
                 element: <Profile/>,
-            },
-            {
+            }, {
                 path: "topics",
                 element: <Topics/>,
                 children: [
@@ -43,8 +45,7 @@ const router = createBrowserRouter([
                         element: <TopicForm/>
                     }
                 ]
-            },
-            {
+            }, {
                 path: "search/:query",
                 element: <SearchResults/>,
             },

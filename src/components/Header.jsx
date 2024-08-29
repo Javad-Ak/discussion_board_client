@@ -12,6 +12,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '/logo.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import {Container} from "react-bootstrap";
 
 function Header() {
     document.addEventListener('DOMContentLoaded', onLoad);
@@ -69,7 +70,9 @@ function Header() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Outlet/>
+            <Container className="p-3">
+                <Outlet/>
+            </Container>
         </>
     );
 }
