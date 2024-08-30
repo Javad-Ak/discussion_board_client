@@ -1,7 +1,8 @@
 import {redirect} from "react-router-dom";
 
-async function login() {
-    console.log("login")
+async function login({request}) {
+    const data = await request.json;
+    console.log(data.get("username"));
     return redirect("/")
 }
 

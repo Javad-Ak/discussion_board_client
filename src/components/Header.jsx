@@ -12,9 +12,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '/logo.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import {Container} from "react-bootstrap";
 
-function Header() {
+export default function Header() {
     document.addEventListener('DOMContentLoaded', onLoad);
     window.onresize = () => {
         makeResponsive();
@@ -70,9 +69,7 @@ function Header() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Container className="p-3">
-                <Outlet/>
-            </Container>
+            <Outlet/>
         </>
     );
 }
@@ -93,6 +90,3 @@ function onLoad() {
     onPageLoaded();
     makeResponsive();
 }
-
-
-export default Header;

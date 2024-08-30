@@ -1,10 +1,8 @@
 import {useParams} from "react-router-dom";
 
-function Profile() {
+export default function Profile() {
     const params = useParams()
     return (
         <p>profile of {params.username}</p>
     )
 }
-
-export default Profile
