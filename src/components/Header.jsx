@@ -52,7 +52,7 @@ export default function Header() {
                     <Nav id="secondNav">
                         {Cookies.get("isAuthenticated") ?
                             <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
-                                <Avatar round={10} size={avatarSize - 5} name="Javad"/>
+                                <Avatar round={true} size={avatarSize - 5} name="Javad"/>
                             </Nav.Item>
                             :
                             <Nav.Item className="d-inline-flex align-items-center gap-2">
@@ -75,14 +75,18 @@ export default function Header() {
 }
 
 function makeResponsive() {
-    if (window.innerWidth < 992) {
-        document.getElementById("orderItem").className = "d-flex gap-2 order-first mt-2";
-        document.getElementById("secondNav").className = "d-flex border-top mt-2 p-2";
-        document.getElementById("themeToggle").className = "border-0 rounded-5 order-last bg-transparent";
-    } else {
-        document.getElementById("orderItem").className = "d-flex gap-2 order-last"
-        document.getElementById("secondNav").className = "";
-        document.getElementById("themeToggle").className = "border-0 rounded-5 order-first bg-transparent";
+    try {
+        if (window.innerWidth < 992) {
+            document.getElementById("orderItem").className = "d-flex gap-2 order-first mt-2";
+            document.getElementById("secondNav").className = "d-flex border-top mt-2 p-2";
+            document.getElementById("themeToggle").className = "border-0 rounded-5 order-last bg-transparent";
+        } else {
+            document.getElementById("orderItem").className = "d-flex gap-2 order-last"
+            document.getElementById("secondNav").className = "";
+            document.getElementById("themeToggle").className = "border-0 rounded-5 order-first bg-transparent";
+        }
+    } catch {
+        // no action
     }
 }
 

@@ -29,6 +29,7 @@ export default function LoginForm() {
                                         <label htmlFor="username">username</label>
                                         <input type="username"
                                                className="form-control"
+                                               name="username"
                                                id="username"
                                                placeholder="username" required/>
                                     </div>
@@ -36,12 +37,13 @@ export default function LoginForm() {
                                         <label htmlFor="password">Password</label>
                                         <input type="password"
                                                className="form-control"
+                                               name="password"
                                                id="password"
                                                placeholder="Password"
                                                required/>
                                     </div>
 
-                                    <button className="btn btn-primary w-100 mt-4">Login</button>
+                                    <button type="submit" className="btn btn-primary w-100 mt-4">Login</button>
                                     <p className="text-center mt-1">
                                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                                         Don't have an account? <Link to="/signup">Signup</Link>

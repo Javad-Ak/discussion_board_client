@@ -26,9 +26,34 @@ export default function SignupForm() {
                             <Card.Body>
                                 <Form method="post">
                                     <div className="form-group mb-2">
+                                        <label htmlFor="first_name">first name</label>
+                                        <input type="text"
+                                               className="form-control"
+                                               name="first_name"
+                                               id="first_name"
+                                               placeholder="first name" required/>
+                                    </div>
+                                    <div className="form-group mb-2">
+                                        <label htmlFor="last_name">last name</label>
+                                        <input type="text"
+                                               className="form-control"
+                                               name="last_name"
+                                               id="last_name"
+                                               placeholder="last name" required/>
+                                    </div>
+                                    <div className="form-group mb-2">
+                                        <label htmlFor="email">email</label>
+                                        <input type="text"
+                                               className="form-control"
+                                               name="email"
+                                               id="email"
+                                               placeholder="email" required/>
+                                    </div>
+                                    <div className="form-group mb-2">
                                         <label htmlFor="username">username</label>
                                         <input type="username"
                                                className="form-control"
+                                               name="username"
                                                id="username"
                                                placeholder="username" required/>
                                     </div>
@@ -36,12 +61,22 @@ export default function SignupForm() {
                                         <label htmlFor="password">Password</label>
                                         <input type="password"
                                                className="form-control"
+                                               name="password"
                                                id="password"
                                                placeholder="Password"
                                                required/>
                                     </div>
+                                    <div className="form-group mb-2">
+                                        <label htmlFor="confirmPassword">confirm password</label>
+                                        <input type="password"
+                                               className="form-control"
+                                               name="confirmPassword"
+                                               id="confirmPassword"
+                                               placeholder="confirm password"
+                                               required/>
+                                    </div>
 
-                                    <button className="btn btn-primary w-100 mt-4">Signup</button>
+                                    <button type="submit" className="btn btn-primary w-100 mt-4">Signup</button>
                                     <p className="text-center mt-1">
                                         Already have an account? <Link to="/login">Login</Link>
                                     </p>
