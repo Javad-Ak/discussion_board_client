@@ -1,13 +1,12 @@
 import {Container, Row, Col, Card} from 'react-bootstrap';
-import {Form, Link} from "react-router-dom";
+import {Form, Link, useActionData} from "react-router-dom";
 import Avatar from "react-avatar";
 import logo from '/logo.png';
-import {onPageLoaded} from "../../actions/theme.js";
 import Navbar from "react-bootstrap/Navbar";
 
 export default function LoginForm() {
-    document.addEventListener('DOMContentLoaded', onPageLoaded);
     const avatarSize = window.screen.width < 992 ? 36 : 42;
+    const errors = useActionData();
 
     return (
         <>
@@ -18,7 +17,7 @@ export default function LoginForm() {
             </Navbar>
             <Container className="mt-5">
                 <Row className="justify-content-center">
-                    <Col md={5}>
+                    <Col md={4}>
                         <Card>
                             <Card.Title className="text-center mt-2">
                                 Account Login
@@ -33,7 +32,7 @@ export default function LoginForm() {
                                                id="username"
                                                placeholder="username" required/>
                                     </div>
-                                    <div className="form-group mb-2">
+                                    <div className="form-group mb-4">
                                         <label htmlFor="password">Password</label>
                                         <input type="password"
                                                className="form-control"
@@ -43,7 +42,13 @@ export default function LoginForm() {
                                                required/>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary w-100 mt-4">Login</button>
+                                    {errors ? <p className="text-center text-danger">
+                                        {Object.values(errors)[0] || "Something went wrong! Try again later."}
+                                    </p> : null}
+                                    <button type="submit" className="btn btn-primary w-100"
+                                            disabled={navigation.state === "submitting"}>
+                                        Login
+                                    </button>
                                     <p className="text-center mt-1">
                                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                                         Don't have an account? <Link to="/signup">Signup</Link>

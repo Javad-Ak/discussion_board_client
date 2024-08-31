@@ -12,6 +12,7 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import {login, signup} from "./actions/accounts.js";
 import Cover from "./components/Cover.jsx";
 import CommentsList from "./components/CommentsList.jsx";
+import {onPageLoaded} from "./actions/theme.js";
 
 // errors are handled via the provider
 const router = createBrowserRouter([
@@ -59,6 +60,8 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+    document.addEventListener('DOMContentLoaded', onPageLoaded);
+
     return (
         <RouterProvider router={router}/>
     )

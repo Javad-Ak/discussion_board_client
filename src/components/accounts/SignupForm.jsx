@@ -1,13 +1,13 @@
 import {Container, Row, Col, Card} from 'react-bootstrap';
-import {Link, Form} from "react-router-dom";
+import {Link, Form, useActionData, useNavigation} from "react-router-dom";
 import Avatar from "react-avatar";
 import logo from '/logo.png';
-import {onPageLoaded} from "../../actions/theme.js";
 import Navbar from "react-bootstrap/Navbar";
 
 export default function SignupForm() {
-    document.addEventListener('DOMContentLoaded', onPageLoaded);
     const avatarSize = window.screen.width < 992 ? 36 : 42;
+    const errors = useActionData();
+    const navigation = useNavigation();
 
     return (
         <>
@@ -18,7 +18,7 @@ export default function SignupForm() {
             </Navbar>
             <Container className="mt-5">
                 <Row className="justify-content-center">
-                    <Col md={5}>
+                    <Col md={4}>
                         <Card>
                             <Card.Title className="text-center mt-2">
                                 Account Signup
@@ -66,7 +66,7 @@ export default function SignupForm() {
                                                placeholder="Password"
                                                required/>
                                     </div>
-                                    <div className="form-group mb-2">
+                                    <div className="form-group mb-4">
                                         <label htmlFor="confirmPassword">confirm password</label>
                                         <input type="password"
                                                className="form-control"
@@ -76,7 +76,13 @@ export default function SignupForm() {
                                                required/>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary w-100 mt-4">Signup</button>
+                                    {errors ? <p className="text-center text-danger">
+                                        {Object.values(errors)[0] || "Something went wrong! Try again later."}
+                                    </p> : null}
+                                    <button type="submit" className="btn btn-primary w-100"
+                                            disabled={navigation.state === "submitting"}>
+                                        Signup
+                                    </button>
                                     <p className="text-center mt-1">
                                         Already have an account? <Link to="/login">Login</Link>
                                     </p>

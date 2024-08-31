@@ -1,6 +1,6 @@
 import {Outlet, Link, useNavigate} from "react-router-dom";
 import {BiSearch} from "react-icons/bi";
-import {switchTheme, onPageLoaded} from "../actions/theme.js"
+import {switchTheme} from "../actions/theme.js"
 import Button from 'react-bootstrap/Button';
 import {useState} from "react";
 import {PiCircleHalfFill} from "react-icons/pi";
@@ -14,7 +14,6 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function Header() {
-    document.addEventListener('DOMContentLoaded', onLoad);
     window.onresize = () => {
         makeResponsive();
     }
@@ -25,7 +24,7 @@ export default function Header() {
 
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary p-1">
+            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary py-1 px-2">
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <Avatar src={logo} round={true} size={avatarSize}/> Discussion Board
                 </Navbar.Brand>
@@ -50,7 +49,7 @@ export default function Header() {
                         </Nav.Item>
                     </Nav>
                     <Nav id="secondNav">
-                        {Cookies.get("isAuthenticated") ?
+                        {Cookies.get("isAuthenticated") === "true" ?
                             <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
                                 <Avatar round={true} size={avatarSize - 5} name="Javad"/>
                             </Nav.Item>
@@ -88,9 +87,4 @@ function makeResponsive() {
     } catch {
         // no action
     }
-}
-
-function onLoad() {
-    onPageLoaded();
-    makeResponsive();
 }
