@@ -1,11 +1,10 @@
-import {Outlet, Link, useNavigate} from "react-router-dom";
+import {Outlet, Link, useNavigate, useLoaderData} from "react-router-dom";
 import {BiSearch} from "react-icons/bi";
 import {switchTheme} from "../actions/theme.js"
 import Button from 'react-bootstrap/Button';
 import {useState} from "react";
 import {PiCircleHalfFill} from "react-icons/pi";
 
-import Cookies from 'js-cookie';
 import Nav from 'react-bootstrap/Nav';
 import Avatar from "react-avatar";
 import Navbar from 'react-bootstrap/Navbar';
@@ -21,6 +20,7 @@ export default function Header() {
     const avatarSize = window.screen.width < 992 ? 36 : 42;
     const navigate = useNavigate();
     const [query, setQuery] = useState("");
+    const user = useLoaderData();
 
     return (
         <>
@@ -49,9 +49,9 @@ export default function Header() {
                         </Nav.Item>
                     </Nav>
                     <Nav id="secondNav">
-                        {Cookies.get("isAuthenticated") === "true" ?
+                        {user ?
                             <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
-                                <Avatar round={true} size={avatarSize - 5} name="Javad"/>
+                                <Avatar round={true} size={avatarSize - 5} name={user.username} src={user.avatar}/>
                             </Nav.Item>
                             :
                             <Nav.Item className="d-inline-flex align-items-center gap-2">

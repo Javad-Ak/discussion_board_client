@@ -1,8 +1,8 @@
-import {useParams} from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
 
 export default function Profile() {
-    const params = useParams()
+    const user = useLoaderData();
     return (
-        <p>profile of {params.username}</p>
+        <p>{JSON.stringify(user)}</p>
     )
 }

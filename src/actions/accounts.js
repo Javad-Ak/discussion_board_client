@@ -92,6 +92,30 @@ async function refreshToken() {
     }
 }
 
+async function loadUser(inputs) {
+    let username;
+    if (inputs.params && inputs.params.username) {
+        username = inputs.params.username;
+    } else if (Cookies.get("username")) {
+        username = Cookies.get("username");
+    } else {
+        return undefined;
+    }
+
+
+    let response;
+    try {
+        response = await fetch(API_URL + `users/${username}/`)
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.log(error);
+        throw new Response("Server Issues", {status: 500});
+    }
+    throw response;
+}
+
 function logout() {
     setCookies(false);
 }
@@ -103,4 +127,4 @@ function setCookies(isAuthenticated, refresh = "", access = "", username = "") {
     Cookies.set("username", username, {sameSite: 'strict'});
 }
 
-export {login, signup, refreshToken}
+export {login, signup, refreshToken, loadUser}

@@ -4,9 +4,14 @@ import Cookies from "js-cookie";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function createTopic({request}) {
-    const requestBody = await request.formData();
-    if (Cookies.get("isAuthenticated") === "false") {
+async function createTopic({request, body}) {
+    let requestBody;
+    if (body) {
+        requestBody = body;
+    } else {
+        requestBody = await request.formData();
+    }
+    if (Cookies.get("isAuthenticated") !== "true") {
         return redirect("/login");
     }
 
@@ -22,7 +27,7 @@ async function createTopic({request}) {
         } else if (Math.floor(response.status / 100) === 4) {
             if (response.status === 401) {
                 await refreshToken();
-                return await createTopic({request: request});
+                return await createTopic({body: requestBody});
             } else {
                 return await response.json() || {"message": "Something went wrong. Try again later."};
             }
@@ -51,3 +56,5 @@ async function loadTopics() {
 function getHeaders() {
     return {"Authorization": `Bearer ${Cookies.get("access")}`};
 }
+
+export {loadTopics, createTopic}

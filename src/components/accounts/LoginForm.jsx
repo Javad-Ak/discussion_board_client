@@ -1,5 +1,5 @@
 import {Container, Row, Col, Card} from 'react-bootstrap';
-import {Form, Link, useActionData} from "react-router-dom";
+import {Form, Link, useActionData, useNavigation} from "react-router-dom";
 import Avatar from "react-avatar";
 import logo from '/logo.png';
 import Navbar from "react-bootstrap/Navbar";
@@ -7,6 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 export default function LoginForm() {
     const avatarSize = window.screen.width < 992 ? 36 : 42;
     const errors = useActionData();
+    const navigation = useNavigation();
 
     return (
         <>

@@ -9,10 +9,11 @@ import SearchResults from "./components/SearchResults.jsx";
 import LoginForm from "./components/accounts/LoginForm.jsx";
 import SignupForm from "./components/accounts/SignupForm.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
-import {login, signup} from "./actions/accounts.js";
+import {loadUser, login, signup} from "./actions/accounts.js";
 import Cover from "./components/Cover.jsx";
 import CommentsList from "./components/CommentsList.jsx";
 import {onPageLoaded} from "./actions/theme.js";
+import {loadTopics, createTopic} from "./actions/discussions.js";
 
 // errors are handled via the provider
 const router = createBrowserRouter([
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Header/>,
         errorElement: <ErrorPage/>,
+        loader: loadUser,
         children: [
             {
                 path: "",
@@ -39,18 +41,21 @@ const router = createBrowserRouter([
             {
                 path: "profiles/:username",
                 element: <Profile/>,
+                loader: loadUser,
             }, {
                 path: "topics",
                 element: <TopicsList/>,
+                loader: loadTopics,
+            }, {
+                path: "topics/draft",
+                element: <TopicForm/>,
+                action: createTopic
             }, {
                 path: "topics/:topic_id",
                 element: <TopicDetails/>
             }, {
                 path: "topics/:topic_id/comments",
                 element: <CommentsList/>
-            }, {
-                path: "topics/draft",
-                element: <TopicForm/>
             }, {
                 path: "search/:query",
                 element: <SearchResults/>,
