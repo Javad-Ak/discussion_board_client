@@ -13,7 +13,7 @@ import {loadUser, login, signup} from "./actions/accounts.js";
 import Cover from "./components/Cover.jsx";
 import CommentsList from "./components/CommentsList.jsx";
 import {onPageLoaded} from "./actions/theme.js";
-import {loadTopics, createTopic} from "./actions/discussions.js";
+import {loadTopics, createTopic, searchTopics} from "./actions/discussions.js";
 
 // errors are handled via the provider
 const router = createBrowserRouter([
@@ -59,6 +59,7 @@ const router = createBrowserRouter([
             }, {
                 path: "search/:query",
                 element: <SearchResults/>,
+                loader: searchTopics,
             },
         ],
     },

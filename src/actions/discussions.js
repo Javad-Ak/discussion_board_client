@@ -45,6 +45,24 @@ async function loadTopics() {
         response = await fetch(API_URL + "topics/")
         if (response.ok) {
             return await response.json();
+        } else if (Math.floor(response.status / 100) === 4) {
+            return null;
+        }
+    } catch (error) {
+        console.log(error);
+        throw new Response("Server Issues", {status: 500});
+    }
+    throw response;
+}
+
+async function searchTopics({params}) {
+    let response;
+    try {
+        response = await fetch(API_URL + `search/${params.query}`)
+        if (response.ok) {
+            return await response.json();
+        } else if (Math.floor(response.status / 100) === 4) {
+            return null;
         }
     } catch (error) {
         console.log(error);
@@ -57,4 +75,4 @@ function getHeaders() {
     return {"Authorization": `Bearer ${Cookies.get("access")}`};
 }
 
-export {loadTopics, createTopic}
+export {loadTopics, createTopic, searchTopics}
