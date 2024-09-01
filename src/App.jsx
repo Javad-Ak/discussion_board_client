@@ -3,17 +3,17 @@ import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import Header from "./components/Header";
 import TopicsList from "./components/TopicsList.jsx";
 import Profile from "./components/Profile";
-import TopicDetails from "./components/discussions/TopicDetails.jsx";
 import TopicForm from "./components/discussions/TopicForm.jsx";
 import SearchResults from "./components/SearchResults.jsx";
 import LoginForm from "./components/accounts/LoginForm.jsx";
 import SignupForm from "./components/accounts/SignupForm.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
-import {loadUser, login, signup} from "./actions/accounts.js";
+import {editUser, loadUser, login, profileActions, signup} from "./actions/accounts.js";
 import Cover from "./components/Cover.jsx";
 import CommentsList from "./components/CommentsList.jsx";
 import {onPageLoaded} from "./actions/theme.js";
-import {loadTopics, createTopic, searchTopics} from "./actions/discussions.js";
+import {loadTopics, createTopic, searchTopics, loadComments, createComment} from "./actions/discussions.js";
+import ProfileForm from "./components/accounts/ProfileForm.jsx";
 
 // errors are handled via the provider
 const router = createBrowserRouter([
@@ -37,11 +37,16 @@ const router = createBrowserRouter([
                 path: "",
                 element: <Cover/>,
                 index: true,
-            },
-            {
+            }, {
                 path: "profiles/:username",
                 element: <Profile/>,
                 loader: loadUser,
+                action: profileActions,
+            }, {
+                path: "profiles/:username/edit",
+                element: <ProfileForm/>,
+                loader: loadUser,
+                action: editUser,
             }, {
                 path: "topics",
                 element: <TopicsList/>,
@@ -52,10 +57,9 @@ const router = createBrowserRouter([
                 action: createTopic
             }, {
                 path: "topics/:topic_id",
-                element: <TopicDetails/>
-            }, {
-                path: "topics/:topic_id/comments",
-                element: <CommentsList/>
+                element: <CommentsList/>,
+                loader: loadComments,
+                action: createComment,
             }, {
                 path: "search/:query",
                 element: <SearchResults/>,

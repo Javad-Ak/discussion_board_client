@@ -10,8 +10,8 @@ export default function SearchResults() {
             <li>{topicsList}</li>
         )
     } else {
-        return (<p>
-            empty
-        </p>);
+        return (
+            <h3>Nothing Found.</h3>
+        );
     }
 }

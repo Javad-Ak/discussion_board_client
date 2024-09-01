@@ -99,15 +99,16 @@ async function loadUser(inputs) {
     } else if (Cookies.get("username")) {
         username = Cookies.get("username");
     } else {
-        return undefined;
+        return null;
     }
-
 
     let response;
     try {
         response = await fetch(API_URL + `users/${username}/`)
         if (response.ok) {
             return await response.json();
+        } else if (response.status === 404) {
+            return null;
         }
     } catch (error) {
         console.log(error);
@@ -116,8 +117,90 @@ async function loadUser(inputs) {
     throw response;
 }
 
-function logout() {
+async function profileActions({request, params}) {
+    const data = await request.formData();
+    switch (data.get("intent")) {
+        case "logout":
+            return await logout();
+        case "delete":
+            return await deleteUser();
+        case "edit":
+            return redirect(`/profiles/${params.username}/edit`);
+        default:
+            return null;
+    }
+}
+
+async function logout() {
     setCookies(false);
+    return redirect("/");
+}
+
+async function deleteUser() {
+    const username = Cookies.get("username");
+    if (!username) {
+        setCookies(false);
+        return redirect("/");
+    }
+
+    let response;
+    try {
+        response = await fetch(API_URL + `users/${username}/`, {
+            method: "DELETE",
+            headers: getHeaders(),
+        },)
+        if (response.ok) {
+            setCookies(false);
+            return redirect(`/`);
+        } else if (Math.floor(response.status / 100) === 4) {
+            if (response.status === 401) {
+                await refreshToken();
+                return await deleteUser();
+            } else {
+                return await response.json() || {"message": "Something went wrong. Try again later."};
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        throw new Response("Server Issues", {status: 500});
+    }
+    throw response;
+}
+
+async function editUser({request, params, body}) {
+    let requestBody;
+    if (body) {
+        requestBody = body;
+    } else {
+        requestBody = await request.formData();
+    }
+    if (Cookies.get("isAuthenticated") !== "true") {
+        return redirect("/login");
+    }
+    console.log(requestBody)
+
+    let response;
+    try {
+        response = await fetch(API_URL + `users/${params.username}/`, {
+            method: "PATCH",
+            headers: getHeaders(),
+            body: requestBody,
+        },)
+        if (response.ok) {
+            return redirect(`/profiles/${params.username}`);
+        } else if (Math.floor(response.status / 100) === 4) {
+            if (response.status === 401) {
+                await refreshToken();
+                return await editUser({body: requestBody});
+            } else {
+                return await response.json() || {"message": "Something went wrong. Try again later."};
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        throw new Response("Server Issues", {status: 500});
+    }
+    throw response;
 }
 
 function setCookies(isAuthenticated, refresh = "", access = "", username = "") {
@@ -127,4 +210,9 @@ function setCookies(isAuthenticated, refresh = "", access = "", username = "") {
     Cookies.set("username", username, {sameSite: 'strict'});
 }
 
-export {login, signup, refreshToken, loadUser}
+
+function getHeaders() {
+    return {"Authorization": `Bearer ${Cookies.get("access")}`};
+}
+
+export {login, signup, refreshToken, loadUser, getHeaders, editUser, profileActions}

@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function Header() {
+    makeResponsive();
     window.onresize = () => {
         makeResponsive();
     }
@@ -50,8 +51,14 @@ export default function Header() {
                     </Nav>
                     <Nav id="secondNav">
                         {user ?
-                            <Nav.Item as={Link} to="/profiles/javad" className="d-flex align-items-center">
-                                <Avatar round={true} size={avatarSize - 5} name={user.username} src={user.avatar}/>
+                            <Nav.Item className="d-flex align-items-center gap-2">
+                                <Button onClick={switchTheme} variant="" id="themeToggle"
+                                        className="border-0 rounded-5 bg-transparent">
+                                    <PiCircleHalfFill size="1.2em"/>
+                                </Button>
+                                <Link to={`/profiles/${user.username}`}>
+                                    <Avatar round={true} size={avatarSize - 5} name={user.username} src={user.avatar}/>
+                                </Link>
                             </Nav.Item>
                             :
                             <Nav.Item className="d-inline-flex align-items-center gap-2">
@@ -85,6 +92,6 @@ function makeResponsive() {
             document.getElementById("themeToggle").className = "border-0 rounded-5 order-first bg-transparent";
         }
     } catch {
-        // no action
+        // no action needed!
     }
 }
