@@ -77,19 +77,22 @@ async function refreshToken() {
         setCookies(false);
         return;
     }
-
-    const response = await fetch(API_URL + "users/login/refresh/", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({refresh: refresh}),
-    },);
-    if (response.ok) {
-        const responseBody = await response.json();
-        const access = responseBody.access;
-        Cookies.set("access", access, {sameSite: 'strict'});
-    } else {
-        setCookies(false);
+    try {
+        const response = await fetch(API_URL + "users/login/refresh/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({refresh: refresh}),
+        },);
+        if (response.ok) {
+            const responseBody = await response.json();
+            const access = responseBody.access;
+            Cookies.set("access", access, {sameSite: 'strict'});
+        }
+    } catch {
+        // no action needed
     }
+
+    setCookies(false);
 }
 
 async function loadUser(inputs) {

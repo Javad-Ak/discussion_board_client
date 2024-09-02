@@ -14,7 +14,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 
 export default function Header() {
-    useEffect(makeResponsive);
+    useEffect(makeResponsive, []);
     window.addEventListener('resize', makeResponsive);
 
     const avatarSize = window.screen.width < 992 ? 36 : 42;

@@ -55,7 +55,6 @@ export default function ProfileForm() {
                                    name="avatar"
                                    id="avatar"
                                    accept="image/*"
-                                   placeholder="test"
                                    onChange={(e) => {
                                        const file = e.target.files[0];
                                        const reader = new FileReader();

@@ -1,5 +1,5 @@
-import {Container, Row, Col, Card} from 'react-bootstrap';
-import {Form, useActionData, useNavigation} from "react-router-dom";
+import {Container, Row} from 'react-bootstrap';
+import {Form, Link, useActionData, useNavigation} from "react-router-dom";
 import Cookies from "js-cookie";
 
 export default function TopicForm() {
@@ -8,48 +8,44 @@ export default function TopicForm() {
 
     if (Cookies.get("isAuthenticated") !== "true") {
         return (
-            <p>login first</p>
+            <p className="text-center text-danger p-4">login first!</p>
         )
     } else {
         return (
-            <Container className="mt-5">
-                <Row className="justify-content-center">
-                    <Col md={4}>
-                        <Card>
-                            <Card.Title className="text-center mt-2">
-                                Draft and Create a new Topic
-                            </Card.Title>
-                            <Card.Body>
-                                <Form method="post">
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="title">title</label>
-                                        <input type="text"
-                                               className="form-control"
-                                               name="title"
-                                               id="title"
-                                               placeholder="title" required/>
-                                    </div>
-                                    <div className="form-group mb-4">
-                                        <label htmlFor="content">content</label>
-                                        <input type="text"
-                                               className="form-control"
-                                               name="content"
-                                               id="content"
-                                               placeholder="content"
-                                               required/>
-                                    </div>
+            <Container className="py-4 px-4">
+                <h2 className="text-center mb-4">Create a topic</h2>
+                <Row>
+                    <Form method="post" id="form">
+                        <div className="form-group mb-3">
+                            <label htmlFor="title">Choose a title.</label>
+                            <input type="text"
+                                   className="form-control"
+                                   name="title"
+                                   id="title"
+                                   placeholder="title"/>
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="content">Tell others what you think.</label>
+                            <textarea form="form"
+                                      rows="5"
+                                      className="form-control"
+                                      name="content"
+                                      id="content"
+                                      placeholder="content"/>
+                        </div>
 
-                                    {errors ? <p className="text-center text-danger">
-                                        {Object.values(errors)[0] || "Something went wrong! Try again later."}
-                                    </p> : null}
-                                    <button type="submit" className="btn btn-primary w-100"
-                                            disabled={navigation.state === "submitting"}>
-                                        Submit
-                                    </button>
-                                </Form>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                        {errors ? <p className="text-center text-danger">
+                            {Object.values(errors)[0] || "Something went wrong! Try again later."}
+                        </p> : null}
+                        <button type="submit" className="btn btn-primary me-2"
+                                disabled={navigation.state === "submitting"}>
+                            Submit
+                        </button>
+                        <Link to="/topics" className="btn btn-danger"
+                              disabled={navigation.state === "submitting"}>
+                            Cancel
+                        </Link>
+                    </Form>
                 </Row>
             </Container>
         );
