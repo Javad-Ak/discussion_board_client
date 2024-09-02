@@ -2,7 +2,7 @@ import {Outlet, Link, useNavigate, useLoaderData} from "react-router-dom";
 import {BiSearch} from "react-icons/bi";
 import {switchTheme} from "../actions/theme.js"
 import Button from 'react-bootstrap/Button';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {PiCircleHalfFill} from "react-icons/pi";
 
 import Nav from 'react-bootstrap/Nav';
@@ -12,11 +12,10 @@ import logo from '/logo.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+
 export default function Header() {
-    makeResponsive();
-    window.onresize = () => {
-        makeResponsive();
-    }
+    useEffect(makeResponsive);
+    window.addEventListener('resize', makeResponsive);
 
     const avatarSize = window.screen.width < 992 ? 36 : 42;
     const navigate = useNavigate();
@@ -34,7 +33,7 @@ export default function Header() {
                     <Nav className="me-auto ms-2 gap-2">
                         <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
                         <Nav.Link as={Link} to="/topics/draft">Draft</Nav.Link>
-                        <Nav.Item id="orderItem" className="d-flex gap-1">
+                        <Nav.Item id="searchBox" className="d-flex gap-1">
                             < InputGroup className="border rounded-5">
                                 <Form.Control placeholder="Search" aria-describedby="addOn" size="sm" value={query}
                                               className="border-0 rounded-5 bg-transparent"
@@ -83,15 +82,15 @@ export default function Header() {
 function makeResponsive() {
     try {
         if (window.innerWidth < 992) {
-            document.getElementById("orderItem").className = "d-flex gap-2 order-first mt-2";
+            document.getElementById("searchBox").className = "d-flex gap-2 order-first mt-2";
             document.getElementById("secondNav").className = "d-flex border-top mt-2 p-2";
             document.getElementById("themeToggle").className = "border-0 rounded-5 order-last bg-transparent";
         } else {
-            document.getElementById("orderItem").className = "d-flex gap-2 order-last"
+            document.getElementById("searchBox").className = "d-flex gap-2 order-last"
             document.getElementById("secondNav").className = "";
             document.getElementById("themeToggle").className = "border-0 rounded-5 order-first bg-transparent";
         }
-    } catch {
-        // no action needed!
+    } catch (e) {
+        console.warn(e)
     }
 }

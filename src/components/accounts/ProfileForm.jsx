@@ -22,7 +22,7 @@ export default function ProfileForm() {
         return (
             <Container className="py-3 px-4">
                 <h2 className="text-center mb-4">Edit your profile</h2>
-                <Row xs={1}>
+                <Row xs={1} className="mb-4">
                     <Col className="d-flex mb-1 justify-content-center">
                         <Avatar name={user.username} src={avatar} round={true} size={avatarSize}/>
                     </Col>
@@ -30,7 +30,7 @@ export default function ProfileForm() {
                         <p className="text-primary h5">
                             {user.first_name + " " + user.last_name}
                         </p>
-                        <p  className="text-secondary h6">
+                        <p className="text-secondary h6">
                             {user.username}
                         </p>
                     </Col>
@@ -38,8 +38,8 @@ export default function ProfileForm() {
 
                 <Row>
                     <Form method="post" encType="multipart/form-data">
-                        <div className="form-group mb-2">
-                            <label htmlFor="bio">bio</label>
+                        <div className="form-group mb-3">
+                            <label htmlFor="bio">Tell others about yourself in your bio.</label>
                             <input type="text"
                                    className="form-control"
                                    name="bio"
@@ -48,13 +48,14 @@ export default function ProfileForm() {
                                    value={bio}
                                    onChange={(e) => setBio(e.target.value)}/>
                         </div>
-                        <div className="form-group mb-4">
-                            <label htmlFor="avatar">avatar</label>
+                        <div className="form-group mb-3">
+                            <label htmlFor="avatar">Choose an avatar or keep the previous one.</label>
                             <input type="file"
                                    className="form-control"
                                    name="avatar"
                                    id="avatar"
                                    accept="image/*"
+                                   placeholder="test"
                                    onChange={(e) => {
                                        const file = e.target.files[0];
                                        const reader = new FileReader();

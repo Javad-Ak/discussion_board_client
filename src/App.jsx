@@ -70,7 +70,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    document.addEventListener('DOMContentLoaded', onPageLoaded);
+    if (document.readyState === "loading") {
+        // Loading hasn't finished yet
+        document.addEventListener('DOMContentLoaded', onPageLoaded);
+    } else {
+        // `DOMContentLoaded` has already fired
+        onPageLoaded();
+    }
 
     return (
         <RouterProvider router={router}/>

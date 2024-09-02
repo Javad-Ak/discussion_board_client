@@ -142,6 +142,9 @@ async function deleteUser() {
         setCookies(false);
         return redirect("/");
     }
+    if (Cookies.get("isAuthenticated") !== "true") {
+        return redirect("/login");
+    }
 
     let response;
     try {
@@ -177,7 +180,6 @@ async function editUser({request, params, body}) {
     if (Cookies.get("isAuthenticated") !== "true") {
         return redirect("/login");
     }
-    console.log(requestBody)
 
     let response;
     try {
