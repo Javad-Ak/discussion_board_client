@@ -41,8 +41,7 @@ export default function TopicForm() {
                                 disabled={navigation.state === "submitting"}>
                             Submit
                         </button>
-                        <Link to="/topics" className="btn btn-danger"
-                              disabled={navigation.state === "submitting"}>
+                        <Link to="/topics" className="btn btn-danger">
                             Cancel
                         </Link>
                     </Form>

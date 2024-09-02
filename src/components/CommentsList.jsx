@@ -1,55 +1,33 @@
-import {Form, useActionData, useLoaderData, useNavigation} from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
+import {Container, ListGroup} from "react-bootstrap";
+import TopicDetails from "./discussions/TopicDetails.jsx";
+import CommentDetails from "./discussions/CommentDetails.jsx";
+import CommentForm from "./discussions/CommentForm.jsx";
 
 export default function CommentsList() {
     const [topic, comments] = useLoaderData();
-    const navigation = useNavigation();
-    const errors = useActionData();
-    const form = (<Form method="post">
-        <div className="form-group mb-4">
-            <label htmlFor="content">content</label>
-            <input type="text"
-                   className="form-control"
-                   name="content"
-                   id="content"
-                   placeholder="content"
-                   required/>
-        </div>
-
-        {errors ? <p className="text-center text-danger">
-            {Object.values(errors)[0] || "Something went wrong! Try again later."}
-        </p> : null}
-        <button type="submit" className="btn btn-primary w-100"
-                disabled={navigation.state === "submitting"}>
-            Submit
-        </button>
-    </Form>);
 
     if (topic) {
+        let commentsList = null;
         if (comments) {
-            let commentsList = comments.map((comment) => (
-                <ul key={comment.id}>
-                    {JSON.stringify(comment)}
-                </ul>
+            commentsList = comments.map((comment) => (
+                <ListGroup.Item className="border-0" key={comment.id}>
+                    <CommentDetails comment={comment} showContent={true}/>
+                </ListGroup.Item>
             ))
-
-            return (
-                <>
-                    <h3>{JSON.stringify(topic)}</h3>
-                    {form}
-                    <li>{commentsList}</li>
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <h3>{JSON.stringify(topic)}</h3>
-                    {form}
-                </>
-            );
         }
+        return (
+            <Container>
+                <h2 className="text-center m-4">Discuss this topic</h2>
+                <TopicDetails topic={topic} showContent={true}/>
+                <CommentForm/>
+                <ListGroup className="m-2 border-0">{commentsList}</ListGroup>
+            </Container>
+        );
+
     } else {
         return (
-            <h3>Nothing Found.</h3>
+            <p className="text-center text-primary p-4">Nothing Found!</p>
         );
     }
 }

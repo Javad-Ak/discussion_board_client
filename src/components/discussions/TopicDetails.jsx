@@ -1,4 +1,4 @@
-import {Card, Container} from "react-bootstrap";
+import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import Avatar from "react-avatar";
@@ -39,6 +39,13 @@ export default function TopicDetails({topic, showContent}) {
 }
 
 TopicDetails.propTypes = {
-    topic: PropTypes.object,
+    topic: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        username: PropTypes.string.isRequired,
+        avatar: PropTypes.string,
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        date_added: PropTypes.string.isRequired,
+    }),
     showContent: PropTypes.bool,
 }
