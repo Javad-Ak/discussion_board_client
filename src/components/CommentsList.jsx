@@ -24,13 +24,15 @@ export default function CommentsList() {
                 </ListGroup.Item>
                 <ListGroup.Item className="border-0" key="_topic">
                     <TopicDetails topic={topic} showContent={true}/>
-                    <CommentForm/>
+                </ListGroup.Item>
+                <ListGroup.Item className="border-0 mt-1 mb-1" key="_form">
+                    <CommentForm topic_id={topic.id}/>
                     {errors ? <p className="text-center text-danger">
                         {Object.values(errors)[0] || "Something went wrong! Try again later."}
                     </p> : null}
                 </ListGroup.Item>
-                <ListGroup.Item className="p-1 border-0" key="_comments">
-                    <ListGroup>{commentsList}</ListGroup>
+                <ListGroup.Item className="border-0" key="_comments">
+                    <ListGroup className="m-1">{commentsList}</ListGroup>
                     <p className="text-center text-info mt-1">{comments.length} comments made.</p>
                 </ListGroup.Item>
             </ListGroup>

@@ -11,8 +11,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '/logo.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import {Container} from "react-bootstrap";
-
 
 export default function Header() {
     useEffect(makeResponsive, []);
@@ -25,7 +23,7 @@ export default function Header() {
 
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary py-1 px-2">
+            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary py-1 px-2" sticky="top">
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <Avatar src={logo} round={true} size={avatarSize}/> Discussion Board
                 </Navbar.Brand>
@@ -75,7 +73,7 @@ export default function Header() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <div className="m-2">
+            <div className="m-2" style={{fontSize: "0.9rem"}}>
                 <Outlet/>
             </div>
         </>

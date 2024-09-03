@@ -12,7 +12,7 @@ import {editUser, loadUser, login, profileActions, signup} from "./actions/accou
 import Cover from "./components/Cover.jsx";
 import CommentsList from "./components/CommentsList.jsx";
 import {onPageLoaded} from "./actions/theme.js";
-import {loadTopics, createTopic, searchTopics, loadComments, createComment} from "./actions/discussions.js";
+import {loadTopics, createTopic, searchTopics, loadComments, topicsActions} from "./actions/discussions.js";
 import ProfileForm from "./components/accounts/ProfileForm.jsx";
 
 // errors are handled via the provider
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
                 path: "topics/:topic_id",
                 element: <CommentsList/>,
                 loader: loadComments,
-                action: createComment,
+                action: topicsActions,
             }, {
                 path: "search/:query",
                 element: <SearchResults/>,

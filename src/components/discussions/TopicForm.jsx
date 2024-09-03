@@ -8,7 +8,12 @@ export default function TopicForm() {
 
     if (Cookies.get("isAuthenticated") !== "true") {
         return (
-            <p className="text-center text-danger p-4">login first!</p>
+            <h2 className="text-center m-4">
+                <Link to="/login" className="link-info link-underline-opacity-0">
+                    Login to add Topics
+                </Link>
+            </h2>
+
         )
     } else {
         return (
@@ -37,7 +42,7 @@ export default function TopicForm() {
                         {errors ? <p className="text-center text-danger">
                             {Object.values(errors)[0] || "Something went wrong! Try again later."}
                         </p> : null}
-                        <button type="submit" className="btn btn-primary me-2"
+                        <button type="submit" className="btn btn-primary me-2" name="intent" value="post"
                                 disabled={navigation.state === "submitting"}>
                             Submit
                         </button>
