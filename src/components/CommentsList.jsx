@@ -1,11 +1,12 @@
-import {useLoaderData} from "react-router-dom";
-import {Container, ListGroup} from "react-bootstrap";
+import {useActionData, useLoaderData} from "react-router-dom";
+import {ListGroup} from "react-bootstrap";
 import TopicDetails from "./discussions/TopicDetails.jsx";
 import CommentDetails from "./discussions/CommentDetails.jsx";
 import CommentForm from "./discussions/CommentForm.jsx";
 
 export default function CommentsList() {
     const [topic, comments] = useLoaderData();
+    const errors = useActionData();
 
     if (topic) {
         let commentsList = null;
@@ -17,12 +18,22 @@ export default function CommentsList() {
             ))
         }
         return (
-            <Container>
-                <h2 className="text-center m-4">Discuss this topic</h2>
-                <TopicDetails topic={topic} showContent={true}/>
-                <CommentForm/>
-                <ListGroup className="m-2 border-0">{commentsList}</ListGroup>
-            </Container>
+            <ListGroup>
+                <ListGroup.Item className="border-0" key="_title">
+                    <h2 className="text-center m-4">Discuss this topic</h2>
+                </ListGroup.Item>
+                <ListGroup.Item className="border-0" key="_topic">
+                    <TopicDetails topic={topic} showContent={true}/>
+                    <CommentForm/>
+                    {errors ? <p className="text-center text-danger">
+                        {Object.values(errors)[0] || "Something went wrong! Try again later."}
+                    </p> : null}
+                </ListGroup.Item>
+                <ListGroup.Item className="p-1 border-0" key="_comments">
+                    <ListGroup>{commentsList}</ListGroup>
+                    <p className="text-center text-info mt-1">{comments.length} comments made.</p>
+                </ListGroup.Item>
+            </ListGroup>
         );
 
     } else {

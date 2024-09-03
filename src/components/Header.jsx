@@ -11,6 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '/logo.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import {Container} from "react-bootstrap";
 
 
 export default function Header() {
@@ -74,7 +75,9 @@ export default function Header() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Outlet/>
+            <div className="m-2">
+                <Outlet/>
+            </div>
         </>
     );
 }

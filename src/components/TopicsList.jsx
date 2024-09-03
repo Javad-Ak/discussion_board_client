@@ -13,7 +13,7 @@ export default function TopicsList() {
         return (
             <>
                 <h2 className="text-center m-4">Latest topics</h2>
-                <ListGroup className="m-2 border-0">{topicsList}</ListGroup>
+                <ListGroup>{topicsList}</ListGroup>
             </>
 
         );
