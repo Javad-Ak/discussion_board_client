@@ -1,13 +1,15 @@
-import {Card} from "react-bootstrap";
+import {Card, Modal} from "react-bootstrap";
 import {Form, Link, useNavigation} from "react-router-dom";
 import PropTypes from "prop-types";
 import Avatar from "react-avatar";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
+import {useState} from "react";
 
 export default function TopicDetails({topic, showContent}) {
     const avatarSize = window.screen.width < 992 ? 30 : 36;
     const navigation = useNavigation();
+    const [showModal, setShowModal] = useState(false);
 
     let content = null;
     if (showContent === true) {
@@ -21,14 +23,11 @@ export default function TopicDetails({topic, showContent}) {
     let deleteLink = null;
     if (showContent === true && Cookies.get("isAuthenticated") === "true" && topic.username === Cookies.get("username")) {
         deleteLink = (
-            <Form method="DELETE">
-                <input type="hidden" name="topic_pk" value={topic.id}/>
-                <Button variant="link" className="link-secondary link-underline-opacity-0" size="sm"
-                        type="submit" name="intent" value="deleteTopic" disabled={navigation.state === "submitting"}>
-                    Delete
-                </Button>
-                <label className="me-2">|</label>
-            </Form>
+            <Button variant="link" className="link-secondary link-underline-opacity-0" size="sm"
+                    type="submit" name="intent" value="deleteTopic" disabled={navigation.state === "submitting"}
+                    onClick={() => setShowModal(true)}>
+                Delete
+            </Button>
         );
     }
 
@@ -55,6 +54,25 @@ export default function TopicDetails({topic, showContent}) {
                     {date.toLocaleDateString()}
                 </label>
             </Card.Footer>
+
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Do you want to permanently delete this topic?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Cancel
+                    </Button>
+                    <Form method="DELETE">
+                        <input type="hidden" name="topic_pk" value={topic.id}/>
+                        <Button variant="danger" type="submit" name="intent" value="deleteTopic"
+                                onClick={() => setShowModal(false)}>
+                            Delete
+                        </Button>
+                    </Form>
+                </Modal.Footer>
+            </Modal>
         </Card>
     )
 }

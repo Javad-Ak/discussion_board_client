@@ -20,7 +20,6 @@ export default function CommentDetails({comment}) {
                         type="submit" name="intent" value="deleteComment" disabled={navigation.state === "submitting"}>
                     Delete
                 </Button>
-                <label className="me-2">|</label>
             </Form>
         );
     }

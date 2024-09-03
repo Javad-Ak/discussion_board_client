@@ -27,7 +27,7 @@ export default function CommentsList() {
                 </ListGroup.Item>
                 <ListGroup.Item className="border-0 mt-1 mb-1" key="_form">
                     <CommentForm topic_id={topic.id}/>
-                    {errors ? <p className="text-center text-danger">
+                    {errors ? <p className="text-center text-danger mt-1">
                         {Object.values(errors)[0] || "Something went wrong! Try again later."}
                     </p> : null}
                 </ListGroup.Item>
