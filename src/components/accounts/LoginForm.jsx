@@ -11,7 +11,8 @@ export default function LoginForm() {
 
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary p-1 justify-content-center">
+            <Navbar collapseOnSelect expand="lg" className="p-1 justify-content-center"
+                    data-bs-theme="dark" style={{backgroundColor: "rebeccapurple"}}>
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <Avatar src={logo} round={true} size={avatarSize}/> Discussion Board
                 </Navbar.Brand>

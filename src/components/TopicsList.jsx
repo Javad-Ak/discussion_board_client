@@ -1,10 +1,10 @@
-import {useLoaderData} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
 import TopicDetails from "./discussions/TopicDetails.jsx";
 import {ListGroup} from "react-bootstrap";
 
 export default function TopicsList() {
     const topics = useLoaderData();
-    if (topics) {
+    if (topics.length > 0) {
         let topicsList = topics.map((topic) => (
             <ListGroup.Item className="border-0" key={topic.id}>
                 <TopicDetails topic={topic} showContent={false}/>
@@ -19,7 +19,9 @@ export default function TopicsList() {
         );
     } else {
         return (
-            <p className="text-center text-primary p-4">Nothing Found!</p>
+            <h2 className="text-center m-4">
+                No topics Found!
+            </h2>
         );
     }
 }

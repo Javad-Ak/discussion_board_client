@@ -9,9 +9,8 @@ export default function TopicForm() {
     if (Cookies.get("isAuthenticated") !== "true") {
         return (
             <h2 className="text-center m-4">
-                <Link to="/login" className="link-info link-underline-opacity-0">
-                    Login to add Topics
-                </Link>
+                <Link to="/login" className="link-primary link-underline-opacity-0">Login </Link>
+                to add Topics
             </h2>
 
         )
