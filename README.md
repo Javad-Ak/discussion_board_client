@@ -1,8 +1,22 @@
-# React + Vite
+# Discussion Board Client: reactjs web app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Discussion Board is a simple react web app using bootstrap with user authentication, profile and discussion management.
+It makes requests to Discussion_Board_Server.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick Start
+
+Build the dependencies with npm:
+
+```
+npm install
+```
+
+Run a dev server:
+
+```
+npm run dev
+```
+
+Note that Discussion_Board_Server needs to be running as well.
