@@ -1,7 +1,7 @@
 import {redirect} from "react-router-dom";
 import Cookies from "js-cookie";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/';
 
 async function login({request}) {
     const requestBody = await request.formData()
@@ -9,8 +9,7 @@ async function login({request}) {
     let response;
     try {
         response = await fetch(API_URL + "users/login/", {
-            method: "POST",
-            body: requestBody,
+            method: "POST", body: requestBody,
         },)
         if (response.ok) {
             const responseBody = await response.json();
@@ -38,8 +37,7 @@ async function signup({request}) {
     let response;
     try {
         response = await fetch(API_URL + "users/signup/", {
-            method: "POST",
-            body: requestBody,
+            method: "POST", body: requestBody,
         },)
         if (response.ok) {
             const username = requestBody.get("username");
@@ -79,9 +77,7 @@ async function refreshToken() {
     }
     try {
         const response = await fetch(API_URL + "users/login/refresh/", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({refresh: refresh}),
+            method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({refresh: refresh}),
         },);
         if (response.ok) {
             const responseBody = await response.json();
@@ -152,8 +148,7 @@ async function deleteUser() {
     let response;
     try {
         response = await fetch(API_URL + `users/${username}/`, {
-            method: "DELETE",
-            headers: getHeaders(),
+            method: "DELETE", headers: getHeaders(),
         },)
         if (response.ok) {
             setCookies(false);
@@ -187,9 +182,7 @@ async function editUser({request, params, body}) {
     let response;
     try {
         response = await fetch(API_URL + `users/${params.username}/`, {
-            method: "PATCH",
-            headers: getHeaders(),
-            body: requestBody,
+            method: "PATCH", headers: getHeaders(), body: requestBody,
         },)
         if (response.ok) {
             return redirect(`/profiles/${params.username}`);

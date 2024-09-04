@@ -2,7 +2,7 @@ import {redirect} from "react-router-dom";
 import {getHeaders, refreshToken} from "./accounts.js";
 import Cookies from "js-cookie";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/';
 
 async function createTopic({request, body}) {
     let requestBody;
